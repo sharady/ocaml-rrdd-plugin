@@ -258,7 +258,7 @@ let exec_tap_ctl () =
 			update_vdi_to_vm_map ()
 		end else
 			let disappeared_pids = List.set_difference !previous_map pid_and_minor_to_sr_and_vdi in
-			let appeared_pids    = List.set_difference pid_and_minor_to_sr_and_vdi !previous_map in
+			let appeared_pids = List.filter (fun (_, (_, (_, vdi))) -> not (List.mem_assoc vdi !vdi_to_vm_map)) !previous_map in
 
 			List.iter (fun (pid, (_, (_, vdi))) ->
 				try
